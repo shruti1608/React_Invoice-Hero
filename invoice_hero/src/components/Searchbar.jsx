@@ -51,9 +51,49 @@ export default function Searchbar({ onChange, limit, setlimit }) {
             // onChange={(value, dateString) => {
             //   console.log("Selected Time: ", value);
             // }}
-            onCalendarChange={(value) =>
-              console.log("calenderchange", value[0], value[1])
-            }
+            onCalendarChange={(value) => {
+              // console.log(
+              //   "calenderchange",
+              //   value[0].$d,
+              //   value[1],
+              //   toString("value[0].$d")
+              // );
+              let arr, arr1;
+              if (value != null && value[0] != null) {
+                arr = value[0].$d.toString();
+                arr = arr.split("+").slice(0, 1).join(" ").split(" ");
+                arr =
+                  arr[0] +
+                  ", " +
+                  arr[2] +
+                  " " +
+                  arr[1] +
+                  " " +
+                  arr[3] +
+                  " " +
+                  arr[4] +
+                  " " +
+                  arr[5];
+              }
+              if (value != null && value[1] != null) {
+                arr1 = value[1].$d.toString();
+                arr1 = arr1.split("+").slice(0, 1).join(" ").split(" ");
+                arr1 =
+                  arr1[0] +
+                  ", " +
+                  arr1[2] +
+                  " " +
+                  arr1[1] +
+                  " " +
+                  arr1[3] +
+                  " " +
+                  arr1[4] +
+                  " " +
+                  arr1[5];
+              }
+              onChange({ startDate: arr, endDate: arr1 });
+              console.log("array1", arr);
+            }}
           />
 
           <Button

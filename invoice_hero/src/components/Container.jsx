@@ -14,23 +14,22 @@ export default function Container() {
   const { data } = useQuery(["invoice-order", filter], getorderinfo);
   console.log(data?.data.orderData, "order");
 
+  function onfilterchange(newfilter) {
+    setfilter({ ...filter, ...newfilter });
+  }
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <ContainerTopbar
         limit={limit}
         setlimit={setlimit}
         totalorder={totalorder}
-        onChange={(filter) => {
-          setfilter(filter);
-        }}
+        onChange={onfilterchange}
       />
       <Tablelist
         order={data?.data.orderData}
         limit={limit}
         setlimit={setlimit}
-        onChange={(filter) => {
-          setfilter(filter);
-        }}
+        onChange={onfilterchange}
       />
     </div>
   );

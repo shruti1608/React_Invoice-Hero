@@ -32,6 +32,13 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       title: "Order",
       dataIndex: "Order",
       key: "Order",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("shopifyOrderNo");
+        onChange({ sortBy, OrderBy });
+      },
       render: (_, record) => (
         <>
           {record.orderNum == record.shopifyOrderNum ? (
@@ -46,6 +53,13 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       title: "Date",
       dataIndex: "invoiceDate",
       key: "invoiceDate",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("invoiceDate");
+        onChange({ sortBy, OrderBy });
+      },
       render: (_, record) => {
         let arr = new Date(record.invoiceDate).toDateString().split(" ");
         arr.splice(0, 1);
@@ -56,18 +70,52 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
         );
       },
     },
-    { title: "Name", dataIndex: "customerName", key: "customerName" },
+    {
+      title: "Name",
+      dataIndex: "customerName",
+      key: "customerName",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("customerName");
+        onChange({ sortBy, OrderBy });
+      },
+      render: (_, record) => {
+        return (
+          <>
+            {record.customerName ? (
+              <div>{record.customerName}</div>
+            ) : (
+              <div>-</div>
+            )}
+          </>
+        );
+      },
+    },
     {
       title: "Total",
       dataIndex: "totalAmount",
       key: "totalAmount",
       sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.totalAmount - b.totalAmount,
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("total");
+        onChange({ sortBy, OrderBy });
+      },
     },
     {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("paymentStatus");
+        onChange({ sortBy, OrderBy });
+      },
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -88,6 +136,13 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       title: "Fulfillment",
       dataIndex: "fulfillmentStatus",
       key: "fulfillmentStatus",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("fulfillmentStatus");
+        onChange({ sortBy, OrderBy });
+      },
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -110,6 +165,13 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      sortDirections: ["descend", "ascend"],
+      sorter: (a, b, sortOrder) => {
+        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+
+        setsortBy("status");
+        onChange({ sortBy, OrderBy });
+      },
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -157,7 +219,7 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
           total: 31,
           hideOnSinglePage: true,
           onChange: (page) => {
-            console.log("pageno", page);
+            // console.log("pageno", page);
             onChange({ page });
           },
         }}
@@ -171,5 +233,3 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
     </div>
   );
 }
-
-//sorting not working

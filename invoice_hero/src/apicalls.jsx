@@ -45,12 +45,17 @@ export const getordercount = () => {
 // };
 
 export const getorderinfo = ({
-  queryKey: [, { searchText, limit, page, sortBy, OrderBy }],
+  queryKey: [
+    ,
+    { searchText, limit, page, sortBy, OrderBy, startDate, endDate },
+  ],
 }) => {
-  console.log(limit, "apical");
+  console.log(limit, startDate, "apical");
   return axiosUrl.get("/api/order", {
     headers: { Authorization: `Bearer ${token}` },
     params: {
+      startDate: startDate || undefined,
+      endDate: endDate || undefined,
       searchText: searchText ? searchText : "",
       OrderBy: OrderBy ? OrderBy : "desc",
       sortBy: sortBy ? sortBy : "invoiceDate",
