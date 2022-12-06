@@ -49,17 +49,7 @@ export default function Tablelist({
       title: "Invoice",
       dataIndex: "orderNum",
       key: "orderNum",
-      sorter: (a, b, sortOrder) => {
-        //console.log(a.orderNum, b.orderNum, "sortOrder - " + sortOrder, "sort");
-
-        //sortOrder === "descend" ? OrderBy:"desc" : OrderBy:"asc";
-
-        // setsortBy("orderNo");
-        onChange({
-          sortBy: "orderNo",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       sortDirections: ["descend", "ascend"],
       render: (_, record) => (
         <a>
@@ -70,15 +60,10 @@ export default function Tablelist({
     },
     {
       title: "Order",
-      dataIndex: "Order",
-      key: "Order",
+      dataIndex: "shopifyOrderNum",
+      key: "shopifyOrderNum",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "shopifyOrderNo",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => (
         <>
           {record.orderNum == record.shopifyOrderNum ? (
@@ -94,12 +79,7 @@ export default function Tablelist({
       dataIndex: "invoiceDate",
       key: "invoiceDate",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "invoiceDate",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => {
         let arr = new Date(record.invoiceDate).toDateString().split(" ");
         arr.splice(0, 1);
@@ -115,12 +95,7 @@ export default function Tablelist({
       dataIndex: "customerName",
       key: "customerName",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "customerName",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => {
         return (
           <>
@@ -138,24 +113,14 @@ export default function Tablelist({
       dataIndex: "totalAmount",
       key: "totalAmount",
       sortDirections: ["ascend", "descend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "total",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
     },
     {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "paymentStatus",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -177,12 +142,7 @@ export default function Tablelist({
       dataIndex: "fulfillmentStatus",
       key: "fulfillmentStatus",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "fulfillmentStatus",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -206,12 +166,7 @@ export default function Tablelist({
       dataIndex: "status",
       key: "status",
       sortDirections: ["descend", "ascend"],
-      sorter: (a, b, sortOrder) => {
-        onChange({
-          sortBy: "status",
-          OrderBy: sortOrder === "descend" ? "desc" : "asc",
-        });
-      },
+      sorter: true,
       render: (_, record) => (
         <Space size="middle">
           <div
@@ -260,15 +215,19 @@ export default function Tablelist({
         bordered={true}
         showSorterTooltip={false}
         loading={isLoading}
+        onChange={(pagination, filters, sorter) => {
+          if (sorter.columnKey) {
+            onChange({ sortBy: sorter.columnKey, orderBy: sorter.order === "descend" ? "desc" : "asc" })
+          }
+          if (pagination.current != null) {
+            onChange({ page: pagination.current });
+          }
+        }}
         //rowKey={(record) => record.id}
         pagination={{
           pageSize: parseInt(filter.limit),
           total: parseInt(totalorder),
           hideOnSinglePage: true,
-          onChange: (page) => {
-            // console.log("pageno", page);
-            onChange({ page });
-          },
         }}
         rowSelection={{
           selectedRowKeys,

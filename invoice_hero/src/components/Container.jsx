@@ -27,7 +27,7 @@ export default function Container({
   const { data, isLoading, isFetching } = useQuery(
     ["invoice-order", filter],
     getorderinfo,
-    { suspense: true, keepPreviousData: true }
+    { keepPreviousData: true }
   );
   //console.log(data?.data.orderData, "order");
 
