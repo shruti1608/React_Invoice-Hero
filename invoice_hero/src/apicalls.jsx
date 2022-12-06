@@ -19,50 +19,57 @@ export const getordercount = () => {
   });
 };
 
-// export const getorderinfo = () => {
-//   return axiosUrl.get(
-//     "/api/order?searchText=&OrderBy=desc&sortBy=invoiceDate&limit=25&pageNo=1",
-//     {
-//       headers: { Authorization: `Bearer ${token}` },
-//     }
-//   );
-// };
-
-// export const getorderinfo = ({
-//   queryKey: [, { searchText, limit, page, sortBy, OrderBy }],
-// }) => {
-//   console.log(limit, "apical");
-//   return axiosUrl.get(
-//     `/api/order?searchText=${searchText ? searchText : ""}&OrderBy=${
-//       OrderBy ? OrderBy : "desc"
-//     }&sortBy=${sortBy ? sortBy : "invoiceDate"}&limit=${
-//       limit ? limit : 25
-//     }&pageNo=${page ? page : 1}`,
-//     {
-//       headers: { Authorization: `Bearer ${token}` },
-//     }
-//   );
-// };
-
 export const getorderinfo = ({
   queryKey: [
     ,
-    { searchText, limit, page, sortBy, OrderBy, startDate, endDate },
+    {
+      searchText,
+      limit,
+      page,
+      sortBy,
+      OrderBy,
+      dateFilter: [startDateTmp, endDateTmp] = [],
+      paymentStatus,
+      fulfillmentStatus,
+      mail,
+      orderStatus,
+    },
   ],
 }) => {
-  console.log(limit, startDate, "apical");
-  return axiosUrl.get("/api/order", {
-    headers: { Authorization: `Bearer ${token}` },
-    params: {
-      startDate: startDate || undefined,
-      endDate: endDate || undefined,
-      searchText: searchText ? searchText : "",
-      OrderBy: OrderBy ? OrderBy : "desc",
-      sortBy: sortBy ? sortBy : "invoiceDate",
-      limit: limit ? limit : 25,
-      pageNo: page ? page : 1,
-    },
-  });
+  //console.log(limit, startDate, "apical");
+
+  let startDate = null;
+  let endDate = null;
+
+  if (startDateTmp) {
+    startDate = new Date(startDateTmp.format());
+    startDate.setHours(0, 0, 0, 0);
+  }
+
+  if (endDateTmp) {
+    endDate = new Date(endDateTmp.format());
+    endDate.setHours(23, 59, 59, 999);
+  }
+  return axiosUrl
+    .get("/api/order", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        startDate: startDate?.toUTCString() || undefined,
+        endDate: endDate?.toUTCString() || undefined,
+        paymentStatus: paymentStatus || undefined,
+        fulfillmentStatus: fulfillmentStatus || undefined,
+        mail: mail || undefined,
+        orderStatus: orderStatus || undefined,
+        searchText: searchText ? searchText : "",
+        OrderBy: OrderBy ? OrderBy : "desc",
+        sortBy: sortBy ? sortBy : "invoiceDate",
+        limit: limit ? limit : 25,
+        pageNo: page ? page : 1,
+      },
+    })
+    .then((res) =>
+      res.data.orderData.map((order) => ({ ...order, key: order.orderId }))
+    );
 };
 
 export const getsettingsinfo = () => {

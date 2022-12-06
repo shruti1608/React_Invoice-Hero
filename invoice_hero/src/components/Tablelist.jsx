@@ -1,11 +1,48 @@
-import { Table, Space, Select, Typography } from "antd";
-import { ExportOutlined } from "@ant-design/icons";
+import { Table, Space, Select, Typography, Dropdown, Spin } from "antd";
+import { ExportOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export default function Tablelist({ order, onChange, limit, setlimit }) {
+export default function Tablelist({
+  order,
+  onChange,
+  filter,
+  totalorder,
+  chooseheader,
+  setchooseheader,
+  selectedRowKeys,
+  setSelectedRowKeys,
+  isLoading,
+}) {
   //console.log(order, "table");
-  const [sortBy, setsortBy] = useState("");
-  const [OrderBy, setorderBy] = useState("");
+  // console.log(totalorder, "totalorder");
+  //const [sortBy, setsortBy] = useState("");
+  //const [OrderBy, setorderBy] = useState("");
+  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+    if (newSelectedRowKeys.length > 0) {
+      setchooseheader(true);
+    } else {
+      setchooseheader(false);
+    }
+  };
+  const items = [
+    {
+      label: "View the invoice",
+      key: "1",
+    },
+    {
+      label: "Resend the invoice to the customer",
+      key: "2",
+    },
+    {
+      label: "Regenrate",
+      key: "3",
+    },
+  ];
+
   const { Option } = Select;
   const columns = [
     {
@@ -15,10 +52,13 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       sorter: (a, b, sortOrder) => {
         //console.log(a.orderNum, b.orderNum, "sortOrder - " + sortOrder, "sort");
 
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
+        //sortOrder === "descend" ? OrderBy:"desc" : OrderBy:"asc";
 
-        setsortBy("orderNo");
-        onChange({ sortBy, OrderBy });
+        // setsortBy("orderNo");
+        onChange({
+          sortBy: "orderNo",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       sortDirections: ["descend", "ascend"],
       render: (_, record) => (
@@ -34,10 +74,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "Order",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("shopifyOrderNo");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "shopifyOrderNo",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => (
         <>
@@ -55,10 +95,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "invoiceDate",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("invoiceDate");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "invoiceDate",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => {
         let arr = new Date(record.invoiceDate).toDateString().split(" ");
@@ -76,10 +116,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "customerName",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("customerName");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "customerName",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => {
         return (
@@ -99,10 +139,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "totalAmount",
       sortDirections: ["ascend", "descend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("total");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "total",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
     },
     {
@@ -111,10 +151,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "paymentStatus",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("paymentStatus");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "paymentStatus",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => (
         <Space size="middle">
@@ -138,10 +178,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "fulfillmentStatus",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("fulfillmentStatus");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "fulfillmentStatus",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => (
         <Space size="middle">
@@ -167,10 +207,10 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
       key: "status",
       sortDirections: ["descend", "ascend"],
       sorter: (a, b, sortOrder) => {
-        sortOrder === "descend" ? setorderBy("desc") : setorderBy("asc");
-
-        setsortBy("status");
-        onChange({ sortBy, OrderBy });
+        onChange({
+          sortBy: "status",
+          OrderBy: sortOrder === "descend" ? "desc" : "asc",
+        });
       },
       render: (_, record) => (
         <Space size="middle">
@@ -184,23 +224,28 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
           >
             {record.status}
           </div>
-
-          <Select
-            size="small"
-            placeholder="Action"
-            dropdownMatchSelectWidth={false}
-          >
-            <Option value="View the invoice">View the invoice</Option>
-            <Option value="Resend the invoice to the customer">
-              Resend the invoice to the customer
-            </Option>
-            <Option value="Regenrate">Regenrate</Option>
-          </Select>
+        </Space>
+      ),
+    },
+    {
+      // title: "Status",
+      // dataIndex: "status",
+      // key: "status",
+      render: (_, record) => (
+        <Space size="middle">
+          <Dropdown menu={{ items }} trigger={["click"]}>
+            <a>
+              <Space>
+                Action
+                <CaretDownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
         </Space>
       ),
     },
   ];
-  // console.log("sortby - " + sortBy, "orderby - " + OrderBy);
+
   return (
     <div
       style={{
@@ -214,9 +259,11 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
         dataSource={order}
         bordered={true}
         showSorterTooltip={false}
+        loading={isLoading}
+        //rowKey={(record) => record.id}
         pagination={{
-          pageSize: parseInt(limit),
-          total: 31,
+          pageSize: parseInt(filter.limit),
+          total: parseInt(totalorder),
           hideOnSinglePage: true,
           onChange: (page) => {
             // console.log("pageno", page);
@@ -224,10 +271,8 @@ export default function Tablelist({ order, onChange, limit, setlimit }) {
           },
         }}
         rowSelection={{
-          type: "checkbox",
-          getCheckboxProps(record) {
-            return { name: record.name };
-          },
+          selectedRowKeys,
+          onChange: onSelectChange,
         }}
       />
     </div>

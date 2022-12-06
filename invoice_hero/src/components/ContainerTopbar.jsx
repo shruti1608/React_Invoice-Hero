@@ -5,8 +5,9 @@ import Searchbar from "../components/Searchbar";
 
 export default function ContainerTopbar({
   onChange,
-  limit,
-  setlimit,
+  filter,
+  // limit,
+  // setlimit,
   totalorder,
 }) {
   const { data } = useQuery(["invoice"], getshopinfo);
@@ -24,7 +25,12 @@ export default function ContainerTopbar({
         }}
       >
         <Ordercount style={{ alignSelf: "center" }} totalorder={totalorder} />
-        <Searchbar onChange={onChange} limit={limit} setlimit={setlimit} />
+        <Searchbar
+          onChange={onChange}
+          filter={filter}
+
+          // limit={limit} setlimit={setlimit}
+        />
       </div>
     </div>
   );

@@ -3,10 +3,14 @@ import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import Morefilters from "../components/Morefilters";
 
-export default function Searchbar({ onChange, limit, setlimit }) {
+export default function Searchbar({
+  onChange,
+  filter,
+  // limit, setlimit
+}) {
   const { Option } = Select;
   const [visible, setvisible] = useState(false);
-  const [searchText, setSearchtext] = useState("");
+  //const [searchText, setSearchtext] = useState("");
   //const [limit, setlimit] = useState(25);
 
   function openDrawer() {
@@ -14,9 +18,9 @@ export default function Searchbar({ onChange, limit, setlimit }) {
     console.log("visible", visible);
   }
   function searchtextchange(e) {
-    setSearchtext(e.target.value);
-    console.log("clear", e.target.value, "+", searchText);
-    onChange({ searchText, limit });
+    // setSearchtext(e.target.value);
+    // console.log("clear", e.target.value, "+", searchText);
+    onChange({ searchText: e.target.value });
   }
 
   return (
@@ -34,13 +38,13 @@ export default function Searchbar({ onChange, limit, setlimit }) {
             placeholder=" Search by order number or customer name"
             size="large"
             style={{ width: "45rem" }}
-            value={searchText}
+            value={filter.searchText}
             onChange={searchtextchange}
-            onPressEnter={() => {
-              //api call
-              console.log(searchText);
-              onChange({ searchText, limit });
-            }}
+            // onPressEnter={() => {
+            //   //api call
+            // //  console.log(searchText);
+            //   onChange({ searchText : });
+            // }}
             onChangeCapture={() => console.log("change capture")}
           />
           <DatePicker.RangePicker
@@ -48,51 +52,19 @@ export default function Searchbar({ onChange, limit, setlimit }) {
             style={{ width: "7rem" }}
             size="large"
             allowClear={true}
+            allowEmpty={[true, true]}
+            value={filter.dateFilter}
             // onChange={(value, dateString) => {
             //   console.log("Selected Time: ", value);
             // }}
             onCalendarChange={(value) => {
-              // console.log(
-              //   "calenderchange",
-              //   value[0].$d,
-              //   value[1],
-              //   toString("value[0].$d")
-              // );
-              let arr, arr1;
-              if (value != null && value[0] != null) {
-                arr = value[0].$d.toString();
-                arr = arr.split("+").slice(0, 1).join(" ").split(" ");
-                arr =
-                  arr[0] +
-                  ", " +
-                  arr[2] +
-                  " " +
-                  arr[1] +
-                  " " +
-                  arr[3] +
-                  " " +
-                  arr[4] +
-                  " " +
-                  arr[5];
-              }
-              if (value != null && value[1] != null) {
-                arr1 = value[1].$d.toString();
-                arr1 = arr1.split("+").slice(0, 1).join(" ").split(" ");
-                arr1 =
-                  arr1[0] +
-                  ", " +
-                  arr1[2] +
-                  " " +
-                  arr1[1] +
-                  " " +
-                  arr1[3] +
-                  " " +
-                  arr1[4] +
-                  " " +
-                  arr1[5];
-              }
-              onChange({ startDate: arr, endDate: arr1 });
-              console.log("array1", arr);
+              // let arr, arr1;
+              // if (value != null && value[0] != null) {
+              //   arr = value[0].$d.toString();
+              //   arr = arr.split("+").slice(0, 1).join(" ").split(" ");
+              //   arr = arr[0] +", " +arr[2] +" " +arr[1] +" " +arr[3] +" " +arr[4] +" " +arr[5];
+              // }
+              onChange({ dateFilter: value || [] });
             }}
           />
 
@@ -110,11 +82,10 @@ export default function Searchbar({ onChange, limit, setlimit }) {
       <div style={{ marginLeft: "1rem" }}>
         <Select
           size="large"
-          value={limit}
+          value={filter.limit}
           // defaultValue="25"
           onChange={(value) => {
-            setlimit(value);
-            onChange({ limit });
+            onChange({ limit: value });
             console.log("selectbox value", value);
           }}
           // onSelect={
@@ -133,7 +104,12 @@ export default function Searchbar({ onChange, limit, setlimit }) {
           <Option value="100">100</Option>
         </Select>
       </div>
-      <Morefilters visible={visible} setvisible={setvisible} />
+      <Morefilters
+        visible={visible}
+        setvisible={setvisible}
+        filter={filter}
+        onChange={onChange}
+      />
     </div>
   );
 }
