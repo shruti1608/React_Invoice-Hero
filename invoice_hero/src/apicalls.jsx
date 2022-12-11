@@ -77,3 +77,36 @@ export const getsettingsinfo = () => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const mergedpdfcall = ([ids]) => {
+  const data = { ids: ids };
+  return axiosUrl
+    .post("/api/order/bulk/print", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const invoicetocustomer = ([ids]) => {
+  const data = { ids: ids };
+  return axiosUrl
+    .post("/api/order/bulk/send", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const invoicetome = ([ids]) => {
+  const data = { ids: ids };
+  return axiosUrl
+    .post("/api/order/bulk", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

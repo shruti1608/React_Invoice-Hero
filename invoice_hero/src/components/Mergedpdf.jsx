@@ -1,21 +1,28 @@
 import { Button, Divider, Dropdown, Modal, Space } from "antd";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-export default function Mergedpdf() {
+import { mergedpdfcall } from "../apicalls";
+
+export default function Mergedpdf({ selectedRowKeys }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //const [isModalOpen, setIsModalOpen] = useState(false);
-  // function showModal() {
-  //   setIsModalOpen(true);
-  //   console.log(isModalOpen);
-  // }
-  // function handleCancel() {
-  //   setIsModalOpen(false);
-  // }
-  // function handleOk() {
-  //   setIsModalOpen(false);
-  // }
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
+
+  const Mergedpdf = useMutation(mergedpdfcall, {
+    onSuccess: (res, variable) => {
+      console.log("data", res, res.status);
+      if (res.status == "success") {
+        setIsModalOpen(true);
+      }
+      if (res.status == "failed") {
+        setIsModalOpen1(true);
+      }
+    },
+  });
 
   const showModal = () => {
-    setIsModalOpen(true);
+    //setIsModalOpen(true);
+    Mergedpdf.mutate([selectedRowKeys]);
+    console.log(selectedRowKeys);
   };
 
   const handleOk = () => {
@@ -53,19 +60,6 @@ export default function Mergedpdf() {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="ok" type="primary" onClick={handleCancel}>
-            close
-          </Button>,
-        ]}
-      >
-        <p>Sending to your email id: jatin.parate@mlveda.com</p>
-      </Modal>
-      {/* <Modal
-        title="Bulk pdf"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
           <Button key="ok" type="primary" shape="round" onClick={handleCancel}>
             Close
           </Button>,
@@ -74,7 +68,31 @@ export default function Mergedpdf() {
         <Divider />
         <p>Sending to your email id: jatin.parate@mlveda.com</p>
         <Divider />
-      </Modal> */}
+      </Modal>
+      <Modal
+        title="Bulk pdf"
+        open={isModalOpen1}
+        onOk={() => setIsModalOpen1(false)}
+        onCancel={() => setIsModalOpen1(false)}
+        footer={[
+          <Button
+            key="ok"
+            type="primary"
+            shape="round"
+            onClick={() => setIsModalOpen1(false)}
+            url="/pricing"
+          >
+            Start 7 day free trial now.
+          </Button>,
+        ]}
+      >
+        <Divider />
+        <p>
+          This feature is available only for the customers who are using the
+          paid version of the app.
+        </p>
+        <Divider />
+      </Modal>
     </>
   );
 }

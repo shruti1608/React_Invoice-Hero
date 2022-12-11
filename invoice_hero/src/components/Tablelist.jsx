@@ -1,6 +1,5 @@
-import { Table, Space, Select, Typography, Dropdown, Spin } from "antd";
+import { Table, Space, Select, Typography, Dropdown } from "antd";
 import { ExportOutlined, CaretDownOutlined } from "@ant-design/icons";
-import { useState } from "react";
 
 export default function Tablelist({
   order,
@@ -13,12 +12,6 @@ export default function Tablelist({
   setSelectedRowKeys,
   isLoading,
 }) {
-  //console.log(order, "table");
-  // console.log(totalorder, "totalorder");
-  //const [sortBy, setsortBy] = useState("");
-  //const [OrderBy, setorderBy] = useState("");
-  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
@@ -48,7 +41,7 @@ export default function Tablelist({
     {
       title: "Invoice",
       dataIndex: "orderNum",
-      key: "orderNum",
+      key: "orderNo",
       sorter: true,
       sortDirections: ["descend", "ascend"],
       render: (_, record) => (
@@ -61,7 +54,7 @@ export default function Tablelist({
     {
       title: "Order",
       dataIndex: "shopifyOrderNum",
-      key: "shopifyOrderNum",
+      key: "shopifyOrderNo",
       sortDirections: ["descend", "ascend"],
       sorter: true,
       render: (_, record) => (
@@ -111,7 +104,7 @@ export default function Tablelist({
     {
       title: "Total",
       dataIndex: "totalAmount",
-      key: "totalAmount",
+      key: "total",
       sortDirections: ["ascend", "descend"],
       sorter: true,
     },
@@ -216,12 +209,17 @@ export default function Tablelist({
         showSorterTooltip={false}
         loading={isLoading}
         onChange={(pagination, filters, sorter) => {
+          const obj = {};
           if (sorter.columnKey) {
-            onChange({ sortBy: sorter.columnKey, orderBy: sorter.order === "descend" ? "desc" : "asc" })
+            obj.sortBy = sorter.columnKey;
+            obj.OrderBy = sorter.order === "descend" ? "desc" : "asc";
+            //     onChange({ sortBy: sorter.columnKey, OrderBy: sorter.order === "descend" ? "desc" : "asc" })
           }
           if (pagination.current != null) {
-            onChange({ page: pagination.current });
+            //     onChange({ page: pagination.current });
+            obj.page = pagination.current;
           }
+          onChange(obj);
         }}
         //rowKey={(record) => record.id}
         pagination={{

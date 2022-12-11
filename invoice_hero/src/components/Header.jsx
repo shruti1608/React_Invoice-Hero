@@ -24,7 +24,7 @@ export default function Header() {
     <div>
       <Menu
         mode="horizontal"
-        defaultSelectedKeys={"/dashboard"}
+        defaultSelectedKeys={""}
         onClick={({ key }) => {
           if (key.indexOf("/") != -1) {
             console.log("in if key", key);
