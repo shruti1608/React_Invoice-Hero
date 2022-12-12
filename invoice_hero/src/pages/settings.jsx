@@ -207,7 +207,7 @@ export default function Settings() {
             <figure>
               <img src={currency} />
               <figcaption>
-                <NavLink>Currency</NavLink>
+                <NavLink to="/settings/currency-settings">Currency</NavLink>
               </figcaption>
             </figure>
           </Col>
@@ -269,7 +269,7 @@ export default function Settings() {
             <figure>
               <img src={pricing} />
               <figcaption>
-                <NavLink>Pricing</NavLink>
+                <NavLink to="/pricing">Pricing</NavLink>
               </figcaption>
             </figure>
           </Col>
