@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Divider, Typography } from "antd";
 import discount from "../images/discount-settings.png";
 import { useState } from "react";
+import SettingsTitlebar from "../components/SettingsTitlebar";
 
 export default function Pricing() {
   const navigate = useNavigate();
@@ -19,32 +20,7 @@ export default function Pricing() {
           color: "#4d5055",
         }}
       >
-        <div
-          style={{
-            marginTop: "1rem",
-            marginLeft: "10rem",
-            justifyContent: "flex-start",
-            flexDirection: "row",
-            display: "flex",
-          }}
-        >
-          <LeftCircleTwoTone
-            onClick={() => navigate("/settings")}
-            style={{ fontSize: "2rem" }}
-          />
-
-          <span
-            style={{
-              fontWeight: "bold",
-              marginLeft: "1.2rem",
-              alignSelf: "center",
-              //alignItems: "center",
-            }}
-          >
-            Invoice Hero Pricing Plans
-          </span>
-        </div>
-        <Divider />
+        <SettingsTitlebar name={"Invoice Hero Pricing Plans"} />
         <div
           style={{
             display: "flex",

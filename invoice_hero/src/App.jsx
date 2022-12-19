@@ -4,6 +4,7 @@ import Dashboard from "./pages/dashboard";
 import Pricing from "./pages/Pricing";
 import Settings from "./pages/settings";
 import Support from "./pages/support";
+import TaxSettings from "./pages/taxSettings";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             element={<CurrencySettings />}
           />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/settings/tax-settings" element={<TaxSettings />} />
         </Routes>
       </div>
     </BrowserRouter>

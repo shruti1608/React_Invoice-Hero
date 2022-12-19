@@ -169,7 +169,7 @@ export default function Settings() {
           //backgroundColor: "gray",
         }}
       >
-        <Row justify="space-around">
+        <Row justify="space-around" style={{ width: "" }}>
           <Col span={4}></Col>
           <Col span={2}>
             <figure>
@@ -183,7 +183,7 @@ export default function Settings() {
             <figure>
               <img src={taxAndShippingSettings} />
               <figcaption>
-                <NavLink>Tax</NavLink>
+                <NavLink to="/settings/tax-settings">Tax</NavLink>
               </figcaption>
             </figure>
           </Col>
