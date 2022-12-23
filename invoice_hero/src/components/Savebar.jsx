@@ -3,14 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import invoiceHero from "../images/invoiceHero.png";
 import { currenysettings } from "../apicalls";
 
-export default function Savebar({
-  setsavebar,
-  value,
-  setValue,
-  rvalue,
-  style,
-  loading,
-}) {
+export default function Savebar({ style, loading }) {
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (placement) => {
     api.open({
@@ -42,7 +35,16 @@ export default function Savebar({
   // }
 
   return (
-    <div>
+    <div
+      style={{
+        position: "absolute",
+        zindex: "1",
+        backgroundColor: "white",
+        width: "100%",
+        height: "2.5rem",
+        // marginBottom: "-2.5rem",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -94,7 +96,7 @@ export default function Savebar({
         </div>
         {contextHolder}
       </div>
-      <Divider />
+      {/* <Divider /> */}
     </div>
   );
 }

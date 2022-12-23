@@ -34,6 +34,7 @@ export default function Header() {
             navigate("/dashboard");
           }
         }}
+        //style={{ backgroundColor: "yellow" }}
       >
         <div
           style={{

@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { LeftCircleTwoTone } from "@ant-design/icons";
-import { Button, Divider, Form, Radio, Space } from "antd";
+import { Button, Divider, Form, Radio, Space, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { currenysettings, getcurrenysettings } from "../apicalls";
@@ -9,6 +9,7 @@ import SettingsTitlebar from "../components/SettingsTitlebar";
 import { useMutation, useQuery } from "@tanstack/react-query";
 //import { useForm } from "antd/es/form/Form";
 export default function CurrencySettings() {
+  const [api, contextHolder] = notification.useNotification();
   const [initialValues, setinitialValues] = useState({
     radio: "presentment_money",
   });
@@ -18,6 +19,7 @@ export default function CurrencySettings() {
     onSuccess: (data) => {
       console.log(data.invoiceSettings.generateInvoiceOn);
       setinitialValues({ radio: data.invoiceSettings.generateInvoiceOn });
+      openNotification("bottom");
     },
   });
 
@@ -29,6 +31,15 @@ export default function CurrencySettings() {
     console.log(values);
     currencyformat.mutate([values.radio]);
   }
+
+  const openNotification = (placement) => {
+    api.open({
+      message: "Saved Successfully",
+      placement,
+      style: { backgroundColor: "pink" },
+    });
+  };
+
   console.log("initialValues", initialValues);
   return (
     <Form
@@ -39,14 +50,21 @@ export default function CurrencySettings() {
     >
       <Form.Item noStyle shouldUpdate>
         {(form) => {
-          console.log(form.isFieldsTouched());
+          console.log(form, form.isFieldsTouched());
           const isFormchanged = form.isFieldsTouched();
           if (!isFormchanged) {
             return null;
           }
           return (
             <Savebar
-              style={{ position: "absolute" }}
+              style={
+                {
+                  // position: "absolute",
+                  // zindex: "1",
+                  //backgroundColor: "pink",
+                  // height: "4rem",
+                }
+              }
               loading={currencyformat.isLoading}
             />
           );
@@ -112,6 +130,7 @@ export default function CurrencySettings() {
           </div>
         </div>
       </div>
+      {contextHolder}
     </Form>
   );
 }
