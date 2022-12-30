@@ -38,7 +38,7 @@ export default function Savebar({ style, loading }) {
     <div
       style={{
         position: "absolute",
-        zindex: "1",
+        zIndex: 1,
         backgroundColor: "white",
         width: "100%",
         height: "2.5rem",

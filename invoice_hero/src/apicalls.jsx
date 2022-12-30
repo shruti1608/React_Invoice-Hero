@@ -119,8 +119,28 @@ export const invoicetome = ([ids]) => {
     });
 };
 
-export const currenysettings = ([value]) => {
-  const data = { invoiceSettings: { generateInvoiceOn: value } };
+// export const currenysettings = ([radio, values]) => {
+//   //console.log("apicall", "radio:", radio, "values:", values);
+//   const data = {
+//     companyDetails: {
+//       taxNumber: values.taxNumber,
+//     },
+//     invoiceSettings: {
+//       generateInvoiceOn: radio ? radio : undefined,
+//       isShowTax: values.show_tax,
+//       isShowIndividualTax: values.show_individual,
+//       isShowEmptyTaxInSummary: values.do_not_show_tax,
+//       isShowCustomerVatNumber: values.show_customer_tax_number,
+//       customerVatNumberLabel: values.taxlabel,
+//     },
+//   };
+//   return axiosUrl.put("/api/settings", data).then((res) => {
+//     return res.data;
+//   });
+// };
+export const currenysettings = (settingsdata) => {
+  //console.log("apicall", "radio:", radio, "values:", values);
+  const data = settingsdata;
   return axiosUrl.put("/api/settings", data).then((res) => {
     return res.data;
   });

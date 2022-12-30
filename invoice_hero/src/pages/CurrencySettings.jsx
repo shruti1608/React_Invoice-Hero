@@ -29,7 +29,13 @@ export default function CurrencySettings() {
 
   function onFinish(values) {
     console.log(values);
-    currencyformat.mutate([values.radio]);
+    // currencyformat.mutate([values.radio]);
+
+    currencyformat.mutate({
+      invoiceSettings: {
+        generateInvoiceOn: values.radio,
+      },
+    });
   }
 
   const openNotification = (placement) => {
@@ -55,19 +61,7 @@ export default function CurrencySettings() {
           if (!isFormchanged) {
             return null;
           }
-          return (
-            <Savebar
-              style={
-                {
-                  // position: "absolute",
-                  // zindex: "1",
-                  //backgroundColor: "pink",
-                  // height: "4rem",
-                }
-              }
-              loading={currencyformat.isLoading}
-            />
-          );
+          return <Savebar style={{}} loading={currencyformat.isLoading} />;
         }}
       </Form.Item>
       <div>

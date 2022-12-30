@@ -245,7 +245,7 @@ export default function Settings() {
             <figure>
               <img src={companyDetails} />
               <figcaption>
-                <NavLink>Company</NavLink>
+                <NavLink to="/settings/company-details">Company</NavLink>
               </figcaption>
             </figure>
           </Col>

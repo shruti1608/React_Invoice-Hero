@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import CompanyDetails from "./pages/CompanyDetails";
 import CurrencySettings from "./pages/CurrencySettings";
 import Dashboard from "./pages/dashboard";
 import Pricing from "./pages/Pricing";
@@ -21,6 +22,10 @@ function App() {
           />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/settings/tax-settings" element={<TaxSettings />} />
+          <Route
+            path="/settings/company-details"
+            element={<CompanyDetails />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
