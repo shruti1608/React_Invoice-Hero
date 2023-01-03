@@ -94,7 +94,11 @@ export default function TaxSettings() {
     >
       <Form.Item noStyle shouldUpdate>
         {(form) => {
-          //console.log(form, form.isFieldsTouched());
+          // console.log(
+          //   form,
+          //   form.getFieldValue("show_customer_tax_number"),
+          //   form.isFieldsTouched()
+          // );
           const isFormchanged = form.isFieldsTouched();
           if (!isFormchanged) {
             return null;
@@ -255,24 +259,56 @@ export default function TaxSettings() {
                   Show customer's Tax (VAT/GST) number
                 </Checkbox>
               </Form.Item>
-              {showvatlabel === true ? (
-                <>
-                  <Alert
-                    message="Important Info:"
-                    description="You must send an email to support@mlveda.com
+              {/* {showvatlabel === true ? (
+                
+                  <>
+                    <Alert
+                      message="Important Info:"
+                      description="You must send an email to support@mlveda.com
                   so that we can add a field to collect customer's tax details on your cart page."
-                    type="warning"
-                  />
+                      type="warning"
+                    />
 
-                  <Form.Item
-                    name="taxlabel"
-                    label="Tax Label"
-                    style={{ marginTop: "1rem" }}
-                  >
-                    <Input value={initialValues.taxlabel} />
-                  </Form.Item>
-                </>
-              ) : null}
+                    <Form.Item
+                      name="taxlabel"
+                      label="Tax Label"
+                      style={{ marginTop: "1rem" }}
+                    >
+                      <Input value={initialValues.taxlabel} />
+                    </Form.Item>
+                  </>
+                
+              ) : null} */}
+              <Form.Item noStyle shouldUpdate>
+                {(form) => {
+                  console.log(form.getFieldValue("show_customer_tax_number"));
+                  const isFormfieldchanged = form.getFieldValue(
+                    "show_customer_tax_number"
+                  );
+                  if (!isFormfieldchanged) {
+                    console.log("inside the if nuul");
+                    return null;
+                  }
+                  return (
+                    <>
+                      <Alert
+                        message="Important Info:"
+                        description="You must send an email to support@mlveda.com
+        so that we can add a field to collect customer's tax details on your cart page."
+                        type="warning"
+                      />
+
+                      <Form.Item
+                        name="taxlabel"
+                        label="Tax Label"
+                        style={{ marginTop: "1rem" }}
+                      >
+                        <Input value={initialValues.taxlabel} />
+                      </Form.Item>
+                    </>
+                  );
+                }}
+              </Form.Item>
             </div>
           </div>
         </div>
@@ -283,3 +319,5 @@ export default function TaxSettings() {
 }
 
 // how to get inactive form field value
+
+// upload.dragger, also use accept = ".jpg,.png" prop
