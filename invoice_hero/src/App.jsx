@@ -1,34 +1,10 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import CompanyDetails from "./pages/CompanyDetails";
-import CurrencySettings from "./pages/CurrencySettings";
-import Dashboard from "./pages/dashboard";
-import Pricing from "./pages/Pricing";
-import Settings from "./pages/settings";
-import Support from "./pages/support";
-import TaxSettings from "./pages/taxSettings";
+import Header from "./Components/Header";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route index element={<Navigate to="/dashboard" />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/support" element={<Support />} />
-          <Route
-            path="/settings/currency-settings"
-            element={<CurrencySettings />}
-          />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/settings/tax-settings" element={<TaxSettings />} />
-          <Route
-            path="/settings/company-details"
-            element={<CompanyDetails />}
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div>
+      <Header />
+    </div>
   );
 }
 
