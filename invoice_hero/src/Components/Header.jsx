@@ -1,15 +1,19 @@
-import { FormOutlined, MenuOutlined } from "@ant-design/icons";
+import {
+  FormOutlined,
+  MenuOutlined,
+  BulbOutlined,
+  BellOutlined,
+} from "@ant-design/icons";
 import { Menu, Button } from "antd";
 import { useState } from "react";
 
-export default function Header() {
-  const [collapsed, setCollapsed] = useState(false);
+export default function Header({ collapsed, setCollapsed }) {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
   return (
     <>
-      <Menu mode="horizontal" style={{ backgroundColor: "yellow" }}>
+      <Menu mode="horizontal">
         <div
           style={{
             display: "flex",
@@ -30,7 +34,8 @@ export default function Header() {
             style={{
               color: "orange",
               alignSelf: "center",
-              paddingRight: "2rem",
+              paddingRight: "1rem",
+              fontSize: "2rem",
             }}
           />
           <span
@@ -43,30 +48,6 @@ export default function Header() {
             Notes
           </span>
         </div>
-      </Menu>
-
-      <Menu
-        //defaultSelectedKeys={['1']}
-        //defaultOpenKeys={['sub1']}
-        mode="inline"
-        inlineCollapsed={collapsed}
-        // items={items}
-      >
-        <FormOutlined
-          style={{
-            color: "orange",
-            alignSelf: "center",
-          }}
-        />
-        <span
-          style={{
-            alignSelf: "center",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-          }}
-        >
-          Notes
-        </span>
       </Menu>
     </>
   );
